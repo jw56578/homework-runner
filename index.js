@@ -11,7 +11,9 @@ var studentinfo = {
   students:[]
 
 };
-var pathToTestFile = 'homework/02LessonTwo.js';
+var pathToTestFile = 'homework/01LessonOne.js';
+var githuburl = 'https://github.com/';
+var localrepositorydirectory = './student1';
 
 
 var rl = readline.createInterface({
@@ -22,10 +24,10 @@ var rl = readline.createInterface({
 //delete physical files and pull down from github/
 //set the path to what test needs to be run for
 //run tests
-rl.question(' Pull Repos 2) ', (answer) => {
-  console.log( pigLatin(answer) );
-  getPrompt();
-});
+//rl.question(' Pull Repos 2) ', (answer) => {
+  //console.log( pigLatin(answer) );
+  //getPrompt();
+//});
 
 var jswb = {
   repo:'javascript-workbook',
@@ -94,15 +96,16 @@ function processStudents(course){
 
 
 function main(){
-  deleteFolder('./student');
+  deleteFolder(localrepositorydirectory);
   fillStudents(jswb);
   fillStudents(iwb);
   runAll();
 }
 function runAll(){
   if(repos.length ===0){
+    console.log(pad('github',20,' ') + " " + pad('name',20,' ') + ": " + pad('score',7,' ') + " " +  pad('tests compiled',15,' ') );
     for(var c in completed){
-      console.log(pad(completed[c].github,20,' ') + " " + pad(completed[c].name,20,' ') + ": " + completed[c].failures );
+      console.log(pad(completed[c].github,20,' ') + " " + pad(completed[c].name,20,' ') + ": " + pad(completed[c].score,7,' ') + " " + pad(completed[c].testsFinishedRunning,15,' ') );
     }
     return;
   }
@@ -127,8 +130,8 @@ function getCurrentAccount(homework){
 
 function clone(homework){
   homework = getCurrentAccount(homework);
-  var url = 'https://github.com/' + homework.currentAccount.github + '/' + homework.repo;
-  Git.Clone(url, './student/' + homework.currentAccount.github).then(function(repository) {
+  var url = githuburl + homework.currentAccount.github + '/' + homework.repo;
+  Git.Clone(url, localrepositorydirectory + '/' + homework.currentAccount.github).then(function(repository) {
     // Work with the repository object here.
     //why is it not debugging to here
     //this won't work if the repository has already been cloned to the folder so you have to delete it each time'
@@ -156,8 +159,12 @@ function addTestByDirectory(){
 function runTests(homework){
   // Instantiate a Mocha instance.
   var mocha = new Mocha();
-  var testDir = './student/' + homework.currentAccount.github + '/' ;
+  var testDir = localrepositorydirectory + '/' + homework.currentAccount.github + '/' ;
   homework.currentAccount.numberOfTests = 0;
+  homework.currentAccount.failures = 0;
+  homework.currentAccount.score = 0;
+  homework.currentAccount.testsFinishedRunning = false;
+  completed.push(homework.currentAccount);
   // Add each .js file to the mocha instance
   mocha.addFile(
       path.join(testDir, pathToTestFile)
@@ -165,9 +172,10 @@ function runTests(homework){
   // Run the tests.
   mocha.run(function(failures){
     //why won't it hit here'
-    homework.currentAccount.score = ((homework.currentAccount.numberOfTests - homework.currentAccount.failuers) / homework.currentAccount.numberOfTests) * 100;
     homework.currentAccount.failures = failures;
-    completed.push(homework.currentAccount);
+    homework.currentAccount.score = ((homework.currentAccount.numberOfTests - homework.currentAccount.failures) / homework.currentAccount.numberOfTests) * 100;
+    homework.currentAccount.testsFinishedRunning = true;
+  
     run(homework);
 
   }).on('fail', function(test, err) {
