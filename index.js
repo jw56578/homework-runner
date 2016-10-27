@@ -11,7 +11,15 @@ var studentinfo = {
   students:[]
 
 };
-var pathToTestFile = 'homework/01LessonOne.js';
+process.setMaxListeners(0);
+//var pathToTestFile = 'apps/01PigLatin.js';
+var pathToTestFile = 'homework/01Lessonone.js';
+var pathToTestFile = 'homework/02Lessontwo.js';
+var pathToTestFile = 'apps/02RockPaperScissors.js';
+var pathToTestFile = 'homework/03LessonThree.js';
+var pathToTestFile = 'apps/03TicTacToe.js';
+//var pathToTestFile = 'homework/04LessonFour.js';
+
 var githuburl = 'https://github.com/';
 var localrepositorydirectory = './student1';
 
@@ -119,7 +127,10 @@ function run(homework){
     console.log(homework.processed);
     return;
   }
-
+  homework = getCurrentAccount(homework);
+  //hack if don't want to download repos again
+  //runTests(homework);
+  
   return clone(homework);
 }
 function getCurrentAccount(homework){
@@ -129,15 +140,20 @@ function getCurrentAccount(homework){
 
 
 function clone(homework){
-  homework = getCurrentAccount(homework);
+  
   var url = githuburl + homework.currentAccount.github + '/' + homework.repo;
   Git.Clone(url, localrepositorydirectory + '/' + homework.currentAccount.github).then(function(repository) {
     // Work with the repository object here.
     //why is it not debugging to here
     //this won't work if the repository has already been cloned to the folder so you have to delete it each time'
     homework.processed ++;
-    runTests(homework);
-  }).catch(function(){
+
+
+    run(homework);
+   // runTests(homework);
+
+
+  }).catch(function(e){
    run(homework);
   });
   return homework;
@@ -170,19 +186,29 @@ function runTests(homework){
       path.join(testDir, pathToTestFile)
   );
   // Run the tests.
-  mocha.run(function(failures){
-    //why won't it hit here'
-    homework.currentAccount.failures = failures;
-    homework.currentAccount.score = ((homework.currentAccount.numberOfTests - homework.currentAccount.failures) / homework.currentAccount.numberOfTests) * 100;
-    homework.currentAccount.testsFinishedRunning = true;
-  
-    run(homework);
+  //why is mocha just silently faililng with no error or anything
 
-  }).on('fail', function(test, err) {
-  
-  }).on('test', function(test) {
-        homework.currentAccount.numberOfTests ++;
-  });
+  try{
+    mocha.run(function(failures){
+      //why won't it hit here'
+      homework.currentAccount.failures = failures;
+      homework.currentAccount.score = ((homework.currentAccount.numberOfTests - homework.currentAccount.failures) / homework.currentAccount.numberOfTests) * 100;
+      homework.currentAccount.testsFinishedRunning = true;
+    
+      
+
+    }).on('fail', function(test, err) {
+    
+    }).on('test', function(test) {
+          homework.currentAccount.numberOfTests ++;
+    }).on('end', function() {
+ 
+        run(homework);
+    });
+  }
+  catch(e){
+    run(homework);
+  }
 
 }
 
