@@ -1,4 +1,4 @@
-//var Git = require("nodegit");
+////var Git = require("nodegit");
 var Mocha = require('mocha'),
       fs = require('fs'),
       path = require('path');
@@ -16,13 +16,17 @@ process.setMaxListeners(0);
 //var pathToTestFile = 'apps/01PigLatin.js';
 var pathToTestFile = 'homework/01Lessonone.js';
 var pathToTestFile = 'homework/02Lessontwo.js';
-//var pathToTestFile = 'apps/02RockPaperScissors.js';
+var pathToTestFile = 'apps/02RockPaperScissors.js';
 //var pathToTestFile = 'homework/03LessonThree.js';
 //var pathToTestFile = 'apps/03TicTacToe.js';
-var pathToTestFile = 'homework/04LessonFour.js';
-
-
-
+//var pathToTestFile = 'homework/04LessonFour.js';
+var pathToTestFile = 'homework/05LessonFive.js';
+var pathToTestFile = 'apps/04TowersOfHanoi.js';
+var pathToTestFile = 'apps/05Mastermind.js';
+var pathToTestFile = 'homework/06LessonSix.js';
+var pathToTestFile = 'apps/06SpaceTravelToMars.js';
+var pathToTestFile = 'apps/06.1Checkers.js';
+var pathToTestFile = 'homework/07LessonSeven/test.js';
 
 var completed = [];
 var githuburl = 'https://github.com/';
@@ -45,8 +49,7 @@ function done(student){
     if(student)
         completed.push(student);   
     if(dirs.length > 0){
-        var dir = dirs.pop();
-        runTests(dir,done);
+       main();
     }
     if(completed.length ===numberOfDirs){
         console.log(pad('github',20,' ') + " " + pad('name',20,' ') + ": " + pad('score',7,' ') + " " +  pad('tests compiled',15,' ') );
@@ -116,7 +119,7 @@ function runTests(studentDirectory,done){
     }).on('end', function(t) {
       
     }).on('suite end', function(t) {
-      
+       //done(homework.currentAccount);
     }).on('test end', function(t) {
       
     }).on('pending', function(t) {

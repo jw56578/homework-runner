@@ -10,7 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "cheerio": "^0.22.0",
+    "fs-extra": "^1.0.0",
+    "jsdom": "^9.8.3",
     "mocha": "^3.1.2",
+    "ncp": "^2.0.0",
     "nodegit": "^0.16.0",
     "pad-left": "^2.1.0",
     "promise": "^7.1.1",
