@@ -24,9 +24,12 @@ var pathToTestFile = 'homework/05LessonFive.js';
 var pathToTestFile = 'apps/04TowersOfHanoi.js';
 var pathToTestFile = 'apps/05Mastermind.js';
 var pathToTestFile = 'homework/06LessonSix.js';
-var pathToTestFile = 'apps/06SpaceTravelToMars.js';
-var pathToTestFile = 'apps/06.1Checkers.js';
-var pathToTestFile = 'homework/07LessonSeven/test.js';
+//var pathToTestFile = 'apps/06SpaceTravelToMars.js';
+//var pathToTestFile = 'apps/06.1Checkers.js';
+//var pathToTestFile = 'homework/07LessonSeven/test.js';
+var pathToTestFile = 'apps/07jquery-tic-tac-toe/test.js';
+var pathToTestFile = 'apps/08jquery-towers-of-hanoi/test.js';
+
 
 var completed = [];
 var githuburl = 'https://github.com/';

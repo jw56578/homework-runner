@@ -1,6 +1,6 @@
 var Git = require("nodegit");
 var Mocha = require('mocha'),
-      fs = require('fs'),
+      fs = require('fs-extra'),
       path = require('path');
 var pad = require('pad-left');
 var readline = require('readline');
@@ -104,7 +104,7 @@ function processStudents(course){
 
 
 function main(){
-  deleteFolder(localrepositorydirectory);
+  //deleteFolder(localrepositorydirectory);
   fillStudents(jswb);
   fillStudents(iwb);
   runAll();
@@ -142,73 +142,23 @@ function getCurrentAccount(homework){
 function clone(homework){
   
   var url = githuburl + homework.currentAccount.github + '/' + homework.repo;
-  Git.Clone(url, localrepositorydirectory + '/' + homework.currentAccount.github).then(function(repository) {
-    // Work with the repository object here.
-    //why is it not debugging to here
-    //this won't work if the repository has already been cloned to the folder so you have to delete it each time'
-    homework.processed ++;
-
-
+     //this won't work if the repository has already been cloned to the folder so you have to delete it each time'
+    //this is making it take to long to install the node modules
+    //change this to clone to a temp directory and then copy the files into the real folder where the node_modules are already installed
+  var tempdirectory = localrepositorydirectory + '/' + homework.currentAccount.github + 'temp';
+  Git.Clone(url, tempdirectory).then(function(repository) {
+    try {
+        fs.copySync(tempdirectory,  localrepositorydirectory + '/' + homework.currentAccount.github);
+    } catch(e) {
+        console.log(e);
+    }
+    deleteFolder(tempdirectory);
+    homework.processed ++
     run(homework);
-   // runTests(homework);
-
 
   }).catch(function(e){
    run(homework);
   });
   return homework;
-}
-
-function addTestByDirectory(){
-
-    fs.readdirSync(testDir).filter(function(file){
-      // Only keep the .js files
-      return file.substr(-3) === '.js';
-
-    }).forEach(function(file){
-        mocha.addFile(
-            path.join(testDir, file)
-        );
-    });
-}
-
-function runTests(homework){
-  // Instantiate a Mocha instance.
-  var mocha = new Mocha();
-  var testDir = localrepositorydirectory + '/' + homework.currentAccount.github + '/' ;
-  homework.currentAccount.numberOfTests = 0;
-  homework.currentAccount.failures = 0;
-  homework.currentAccount.score = 0;
-  homework.currentAccount.testsFinishedRunning = false;
-  completed.push(homework.currentAccount);
-  // Add each .js file to the mocha instance
-  mocha.addFile(
-      path.join(testDir, pathToTestFile)
-  );
-  // Run the tests.
-  //why is mocha just silently faililng with no error or anything
-
-  try{
-    mocha.run(function(failures){
-      //why won't it hit here'
-      homework.currentAccount.failures = failures;
-      homework.currentAccount.score = ((homework.currentAccount.numberOfTests - homework.currentAccount.failures) / homework.currentAccount.numberOfTests) * 100;
-      homework.currentAccount.testsFinishedRunning = true;
-    
-      
-
-    }).on('fail', function(test, err) {
-    
-    }).on('test', function(test) {
-          homework.currentAccount.numberOfTests ++;
-    }).on('end', function() {
- 
-        run(homework);
-    });
-  }
-  catch(e){
-    run(homework);
-  }
-
 }
 
