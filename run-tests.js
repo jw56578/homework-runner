@@ -28,8 +28,10 @@ var pathToTestFile = 'homework/06LessonSix.js';
 //var pathToTestFile = 'apps/06.1Checkers.js';
 //var pathToTestFile = 'homework/07LessonSeven/test.js';
 var pathToTestFile = 'apps/07jquery-tic-tac-toe/test.js';
+var pathToTestFile = 'homework/08LessonEight/test.js';
 var pathToTestFile = 'apps/08jquery-towers-of-hanoi/test.js';
-
+//var pathToTestFile = 'apps/09todo-jquery/test.js';
+//var pathToTestFile = 'apps/10address-book-ajax/test.js';
 
 var completed = [];
 var githuburl = 'https://github.com/';
@@ -57,7 +59,7 @@ function done(student){
     if(completed.length ===numberOfDirs){
         console.log(pad('github',20,' ') + " " + pad('name',20,' ') + ": " + pad('score',7,' ') + " " +  pad('tests compiled',15,' ') );
         for(var c in completed){
-            console.log(pad(completed[c].username,20,' ') + " " + pad(completed[c].username,20,' ') + ": " + pad(completed[c].score,7,' ') + " " + pad(completed[c].testsFinishedRunning,15,' ') );
+            console.log(pad(completed[c].username,20,' ') + " " + pad(completed[c].username,20,' ') + ": " + pad(completed[c].score || '0',7,' ') + " " + pad(completed[c].testsFinishedRunning || '0',15,' ') );
         }
     } 
 }
@@ -87,8 +89,7 @@ function runTests(studentDirectory,done){
           username:studentDirectory
       } 
   };
- 
- 
+
   var mocha = new Mocha();
   var testDir = localrepositorydirectory + '/' + homework.currentAccount.username + '/' ;
   homework.currentAccount.numberOfTests = 0;
@@ -110,6 +111,7 @@ function runTests(studentDirectory,done){
   
   try{
     mocha.run(function(failures){
+
       homework.currentAccount.failures = failures;
       homework.currentAccount.score = ((homework.currentAccount.numberOfTests - homework.currentAccount.failures) / homework.currentAccount.numberOfTests) * 100;
       homework.currentAccount.testsFinishedRunning = true;
