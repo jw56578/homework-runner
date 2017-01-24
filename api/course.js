@@ -21,7 +21,7 @@ function get(cb){
         method: "GET",
         headers: {Cookie: authCookies},
         jar:true,
-        uri: "https://campus.austincodingacademy.com/api/courses/57a8d1e6dfcd3c11003e4e51"
+        uri: "https://campus.austincodingacademy.com/api/courses/583c7680335b1a00115aeda9"
         //,proxy: "http://127.0.0.1:54026" // Note the fully-qualified path to Fiddler proxy. No "https" is required, even for https connections to outside.
     },
     function(err, response, body) {
