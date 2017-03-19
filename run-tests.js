@@ -13,8 +13,8 @@ var studentinfo = {
 };
 
 process.setMaxListeners(0);
-//var pathToTestFile = 'apps/01PigLatin.js';
-var pathToTestFile = 'homework/01Lessonone.js';
+var pathToTestFile = 'apps/01PigLatin.js';
+//var pathToTestFile = 'homework/01Lessonone.js';
 //var pathToTestFile = 'homework/02Lessontwo.js';
 //var pathToTestFile = 'apps/02RockPaperScissors.js';
 //var pathToTestFile = 'homework/03LessonThree.js';
@@ -22,13 +22,13 @@ var pathToTestFile = 'homework/01Lessonone.js';
 //var pathToTestFile = 'homework/04LessonFour.js';
 //var pathToTestFile = 'homework/05LessonFive.js';
 //var pathToTestFile = 'apps/04TowersOfHanoi.js';
-//var pathToTestFile = 'apps/05Mastermind.js';
+var pathToTestFile = 'apps/05Mastermind.js';
 //var pathToTestFile = 'homework/06LessonSix.js';
-//var pathToTestFile = 'apps/06SpaceTravelToMars.js';
+var pathToTestFile = 'apps/06SpaceTravelToMars.js';
 //var pathToTestFile = 'apps/06.1Checkers.js';
-//var pathToTestFile = 'homework/07LessonSeven/test.js';
+var pathToTestFile = 'homework/07LessonSeven/test.js';
 //var pathToTestFile = 'apps/07jquery-tic-tac-toe/test.js';
-//var pathToTestFile = 'homework/08LessonEight/test.js';
+var pathToTestFile = 'homework/08LessonEight/test.js';
 //var pathToTestFile = 'apps/08jquery-towers-of-hanoi/test.js';
 //var pathToTestFile = 'apps/09todo-jquery/test.js';
 //var pathToTestFile = 'apps/10address-book-ajax/test.js';

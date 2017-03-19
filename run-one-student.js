@@ -12,7 +12,7 @@ var studentinfo = {
 
 };
 var testResults = [];
-var accountToRun = 'kmcabrera22';
+var accountToRun = 'nickinwaco';
 process.setMaxListeners(0);
 var pathToTestFile = [
     'apps/01PigLatin.js',

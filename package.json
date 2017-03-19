@@ -18,5 +18,8 @@
     "pad-left": "^2.1.0",
     "promise": "^7.1.1",
     "request": "^2.75.0"
+  },
+  "devDependencies": {
+    "http-server": "^0.9.0"
   }
 }
